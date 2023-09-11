@@ -1,20 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import {
+  NavigationContainer,
+  NavigatorScreenParams,
+} from "@react-navigation/native";
+import StackA, { StackAParamList } from "./src/Stacks/StackA";
+import StackB, { StackBParamList } from "./src/Stacks/StackB";
+import StackC, { StackCParamList } from "./src/Stacks/StackC";
+
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+export type RootTabParamList = {
+  StackA: NavigatorScreenParams<StackAParamList>;
+  StackB: NavigatorScreenParams<StackBParamList>;
+  StackC: NavigatorScreenParams<StackCParamList>;
+};
+
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        detachInactiveScreens
+        screenOptions={{ unmountOnBlur: true }}
+      >
+        <Tab.Screen name="StackA" component={StackA} />
+        <Tab.Screen name="StackB" component={StackB} />
+        <Tab.Screen name="StackC" component={StackC} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
